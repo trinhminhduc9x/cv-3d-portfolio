@@ -3,7 +3,9 @@ import { useEffect } from "react";
 import * as THREE from "three";
 
 export default function ShipModel(props) {
-    const { scene } = useGLTF("/models/liberty_ship.glb");
+    const { scene } = useGLTF(
+        import.meta.env.BASE_URL + 'models/liberty_ship.glb'
+    );
 
     useEffect(() => {
         if (!scene) return;

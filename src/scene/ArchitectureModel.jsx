@@ -3,7 +3,9 @@ import { useEffect } from "react";
 import * as THREE from "three";
 
 export default function ArchitectureModel(props) {
-    const { scene } = useGLTF("/models/architecture.glb");
+    const { scene } = useGLTF(
+        import.meta.env.BASE_URL + 'models/architecture.glb'
+    );
 
     useEffect(() => {
         if (!scene) return;
