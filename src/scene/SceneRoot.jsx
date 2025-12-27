@@ -76,11 +76,18 @@ function SceneRoot() {
                     color="#ffd9a8"
                 />
 
-                {/* Additional lighting for active layers */}
+                {/* Layer-specific lighting */}
                 {active === 'mechanical' && (
                     <>
                         <spotLight position={[-8, 10, 5]} angle={0.5} penumbra={0.5} intensity={1.0} castShadow />
                         <spotLight position={[5, 8, 8]} angle={0.4} penumbra={0.5} intensity={0.8} />
+                    </>
+                )}
+
+                {active === 'architecture' && (
+                    <>
+                        <spotLight position={[5, 12, 10]} angle={0.5} penumbra={0.5} intensity={1.2} castShadow />
+                        <spotLight position={[8, 10, 5]} angle={0.4} penumbra={0.5} intensity={1.0} />
                     </>
                 )}
 
