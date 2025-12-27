@@ -2,10 +2,13 @@ import { useGLTF } from "@react-three/drei";
 import { useEffect } from "react";
 import * as THREE from "three";
 
+
+const MODEL_PATH =
+    import.meta.env.BASE_URL + 'models/liberty_ship.glb';
+
 export default function ShipModel(props) {
-    const { scene } = useGLTF(
-        import.meta.env.BASE_URL + 'models/liberty_ship.glb'
-    );
+    const { scene } = useGLTF(MODEL_PATH);
+    useGLTF.preload(MODEL_PATH);
 
     useEffect(() => {
         if (!scene) return;
@@ -46,7 +49,7 @@ export default function ShipModel(props) {
         });
     }, [scene]);
 
-    return <primitive object={scene} dispose={null} {...props} />;
+    return <primitive object={scene} {...props} />;
 }
 
 // Preload GLB file

@@ -2,10 +2,13 @@ import { useGLTF } from "@react-three/drei";
 import { useEffect } from "react";
 import * as THREE from "three";
 
+const MODEL_PATH =
+    import.meta.env.BASE_URL + 'models/software.glb';
+
+
 export default function SoftwareModel(props) {
-    const { scene } = useGLTF(
-        import.meta.env.BASE_URL + 'models/software.glb'
-    );
+    const { scene } = useGLTF(MODEL_PATH);
+    useGLTF.preload(MODEL_PATH);
 
     useEffect(() => {
         if (!scene) return;
@@ -46,7 +49,7 @@ export default function SoftwareModel(props) {
         });
     }, [scene]);
 
-    return <primitive object={scene} dispose={null} {...props} />;
+    return <primitive object={scene} {...props} />;
 }
 
 // Preload GLB file
