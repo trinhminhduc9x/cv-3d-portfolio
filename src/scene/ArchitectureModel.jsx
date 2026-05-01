@@ -12,7 +12,7 @@ export default function ArchitectureModel(props) {
     useEffect(() => {
         if (!scene) return;
 
-        // Reset transforms và scale down 50x
+        // Reset transforms
         scene.position.set(0, 0, 0);
         scene.scale.set(0.1, 0.1, 0.1); // 1/50 = 0.02
         scene.rotation.set(0, 0, 0);

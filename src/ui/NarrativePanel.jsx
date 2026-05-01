@@ -4,7 +4,9 @@ function NarrativePanel({ active }) {
     const section = CV_SECTIONS[active];
 
     return (
-        <div
+        <section
+            aria-labelledby="narrative-title"
+            aria-live="polite"
             style={{
                 position: 'fixed',
                 bottom: 30,
@@ -26,6 +28,7 @@ function NarrativePanel({ active }) {
             {/* Section Header */}
             <div style={{ marginBottom: 20, borderBottom: '2px solid rgba(135, 206, 235, 0.3)', paddingBottom: 14 }}>
                 <h2
+                    id="narrative-title"
                     style={{
                         margin: 0,
                         fontSize: 20,
@@ -164,7 +167,7 @@ function NarrativePanel({ active }) {
                 )}
             </div>
             </div>
-        </div>
+        </section>
     );
 }
 

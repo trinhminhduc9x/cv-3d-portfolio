@@ -14,7 +14,7 @@ function ScrollHint() {
     }, []);
 
     return (
-        <div style={{
+        <div aria-hidden="true" style={{
             position: 'fixed',
             bottom: 82,
             left: '50%',

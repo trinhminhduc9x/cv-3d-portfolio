@@ -16,7 +16,7 @@ function LoadingScreen() {
     if (!visible) return null;
 
     return (
-        <div style={{
+        <div role="status" aria-live="polite" aria-label={`Loading 3D portfolio ${Math.round(progress)} percent`} style={{
             position: 'fixed',
             inset: 0,
             background: '#0f1419',

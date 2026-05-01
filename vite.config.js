@@ -3,5 +3,5 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/cv-3d-portfolio/',
+  base: process.env.NODE_ENV === 'production' ? '/cv-3d-portfolio/' : '/',
 })
