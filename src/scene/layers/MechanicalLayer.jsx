@@ -1,13 +1,8 @@
 /* eslint-disable react/prop-types */
-import BaseLayer from './BaseLayer';
+import ModelLayer from './ModelLayer';
 
-// TODO: Move the mechanical GLB/model module into src/scene/modules when ready.
-function MechanicalLayer({ active = false }) {
-    return (
-        <BaseLayer active={active} rotationSpeed={0.15}>
-            <group />
-        </BaseLayer>
-    );
+function MechanicalLayer(props) {
+    return <ModelLayer {...props} modelId="mechanical" />;
 }
 
 export default MechanicalLayer;

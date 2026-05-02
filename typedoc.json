@@ -2,8 +2,8 @@
   "$schema": "https://typedoc.org/schema.json",
   "entryPoints": [
     "src/core",
-    "src/scene/camera",
-    "src/scene/modules",
+    "src/life-engine",
+    "src/scene/models",
     "src/scene/performance"
   ],
   "entryPointStrategy": "expand",

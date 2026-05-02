@@ -11,10 +11,17 @@ import puppeteer from 'puppeteer';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '../..');
 const PORT = 4174;
-const BASE_URL = `http://127.0.0.1:${PORT}/cv-3d-portfolio/index.html`;
+const BASE_URL = `http://127.0.0.1:${PORT}/`;
 const ARTIFACT_DIR = path.join(ROOT, 'test-results/visual');
 const BASELINE_DIR = path.join(__dirname, '__baselines__');
-const LAYERS = ['Mechanical', 'Architecture', 'Software'];
+const CHAPTERS = [
+    'Prologue',
+    'Origin',
+    'Awakening',
+    'Transformation',
+    'Mastery',
+    'Vision',
+];
 
 let server;
 let browser;
@@ -151,17 +158,21 @@ afterAll(async () => {
     }
 });
 
-describe('CV 3D layer visual regression', () => {
-    test.each(LAYERS)('%s layer renders consistently', async (layer) => {
+describe('CV 3D chapter visual regression', () => {
+    test.each(CHAPTERS)('%s chapter renders consistently', async (chapter) => {
         const page = await browser.newPage();
         await page.setViewport({ width: 1280, height: 720, deviceScaleFactor: 1 });
         await page.goto(BASE_URL, { waitUntil: 'networkidle0' });
-        await page.waitForSelector(`[aria-label="Show ${layer} career layer"]`);
-        await page.click(`[aria-label="Show ${layer} career layer"]`);
+        await page.waitForSelector(`[aria-label="Show ${chapter} chapter"]`);
+        await page.click(`[aria-label="Show ${chapter} chapter"]`);
+        await page.waitForSelector('[aria-label^="Loading 3D portfolio"]', {
+            hidden: true,
+            timeout: 45000,
+        });
         await page.waitForTimeout(1200);
 
         const screenshot = await page.screenshot({ fullPage: false });
-        await compareWithBaseline(layer.toLowerCase(), screenshot);
+        await compareWithBaseline(chapter.toLowerCase(), screenshot);
         await page.close();
     });
 });

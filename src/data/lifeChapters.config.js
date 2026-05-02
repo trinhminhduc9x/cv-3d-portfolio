@@ -45,8 +45,14 @@ export const LIFE_CHAPTERS = [
             wireframe: false,
         },
         textSequence: [
-            'A career path built from structure, space, and systems.',
-            'Scroll to move from foundations into applied geometry.',
+            {
+                vi: 'Mỗi sự nghiệp vĩ đại đều có hình dạng riêng — nhìn từ gần chỉ thấy bước tiếp theo, nhìn từ xa mới thấy toàn bộ hành trình.',
+                en: 'Every great career has its own shape — up close you see only the next step; only from a distance does the full journey reveal itself.',
+            },
+            {
+                vi: 'Con đường này đi qua thép, qua ánh sáng, rồi đến với code — cuộn xuống để thấy nó dần hiện ra.',
+                en: 'This one moves through steel, through light, and into code — scroll to watch it unfold.',
+            },
         ],
     },
     {
@@ -89,8 +95,14 @@ export const LIFE_CHAPTERS = [
             wireframe: false,
         },
         textSequence: [
-            'Mechanical engineering formed the baseline: force, tolerance, measurement.',
-            'The ship becomes a memory of constraints translated into 3D thinking.',
+            {
+                vi: 'Tất cả bắt đầu tại xưởng cơ khí — nơi sai số tính bằng phần nghìn milimet, nơi mỗi chi tiết phải chịu đựng sức nặng không khoan nhượng của thực tế.',
+                en: 'Everything began on the workshop floor — where error is measured in thousandths of a millimeter and every part must bear the unforgiving weight of reality.',
+            },
+            {
+                vi: 'Con tàu kia không chỉ là mô hình — đó là tượng đài của kỷ luật đầu tiên, nơi không gian 3D được hiểu bằng trách nhiệm chứ không phải thẩm mỹ.',
+                en: 'That ship is not merely a model — it is a monument to first discipline, where 3D space was understood through accountability, not aesthetics.',
+            },
         ],
     },
     {
@@ -136,8 +148,14 @@ export const LIFE_CHAPTERS = [
             wireframe: false,
         },
         textSequence: [
-            'Architectural visualization sharpened composition, scale, lighting, and spatial rhythm.',
-            'Geometry was no longer only correct; it had to be readable.',
+            {
+                vi: 'Rồi kiến trúc đến như một giác ngộ — khi hình học không còn chỉ phải đúng, mà phải đẹp, phải khiến người ta dừng lại và cảm nhận điều gì đó không thể gọi tên.',
+                en: 'Then architecture arrived like an awakening — when geometry could no longer merely be correct, but had to be beautiful, had to make people stop and feel something nameless.',
+            },
+            {
+                vi: 'Ánh sáng trở thành ngôn ngữ, bóng đổ trở thành ý nghĩa — và người kỹ sư lần đầu tiên học cách khiến không gian biết kể chuyện.',
+                en: 'Light became language, shadow became meaning — and the engineer learned for the first time how to make space tell a story.',
+            },
         ],
     },
     {
@@ -182,8 +200,21 @@ export const LIFE_CHAPTERS = [
             wireframe: true,
         },
         textSequence: [
-            'C++ and computational geometry turned spatial intuition into systems.',
-            'Raycasts, BVH, collisions, constraints, and scene updates become the working language.',
+            {
+                vi: 'Code đến như một ngọn lửa — C++ và hình học tính toán biến ba năm tư duy không gian thành những hệ thống sống, thở và di chuyển theo thời gian thực.',
+                en: 'Code arrived like fire — C++ and computational geometry forged three years of spatial thinking into systems that live, breathe, and move in real time.',
+            },
+            {
+                vi: 'Raycasts xuyên bóng tối, cây BVH phân tách thế giới, va chạm vang lên như sấm — đây là hạ tầng vô hình làm cho không gian 3D trở nên có thật dưới chân.',
+                en: 'Raycasts pierce the dark, BVH trees split the world, collisions ring out like thunder — the invisible infrastructure that makes 3D space feel real beneath your feet.',
+            },
+        ],
+        links: [
+            {
+                label: 'Play Cyber Runner 3D',
+                url: 'https://tmducdev-source.github.io/cyber-runner-3d-game/',
+                type: 'game',
+            },
         ],
     },
     {
@@ -224,8 +255,14 @@ export const LIFE_CHAPTERS = [
             wireframe: false,
         },
         textSequence: [
-            'The craft matures into performance-aware design: stable commands, predictable geometry, fast loading.',
-            'Engineering discipline becomes software architecture.',
+            {
+                vi: 'Ngọn lửa không tắt — nó trở nên ổn định hơn. Ít thủ thuật, nhiều sự rõ ràng. Kiến trúc vững lại như đá, và code bắt đầu nói bằng sự im lặng có chủ ý.',
+                en: 'The fire did not die — it steadied. Fewer tricks, more clarity. The architecture set like stone, and the code began to speak through deliberate silence.',
+            },
+            {
+                vi: 'Kỷ luật kỹ thuật không biến mất khi trở thành phần mềm — nó trở thành nền móng mà mọi quyết định trong hệ thống đều phải trả lời.',
+                en: 'Engineering discipline does not vanish when it becomes software — it becomes the bedrock that every decision in the system must answer to.',
+            },
         ],
     },
     {
@@ -256,8 +293,14 @@ export const LIFE_CHAPTERS = [
             wireframe: false,
         },
         textSequence: [
-            'The next chapter is clear: robust 3D systems, geometry engines, and tools that turn complexity into usable space.',
-            'Explore mode is unlocked.',
+            {
+                vi: 'Phía trước là khoảng không chưa được vẽ — engine hình học chờ được xây, không gian 3D chờ được thổi hồn, những công cụ chờ được rèn giũa bởi đôi tay đã qua lửa.',
+                en: 'Ahead lies unmapped space — geometry engines waiting to be built, 3D worlds waiting to be given soul, tools waiting to be forged by hands that have been through fire.',
+            },
+            {
+                vi: 'Màn hình đã mở. Thế giới này là của bạn.',
+                en: 'The viewport is open. This world is yours.',
+            },
         ],
     },
 ];

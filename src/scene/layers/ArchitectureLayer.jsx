@@ -1,13 +1,8 @@
 /* eslint-disable react/prop-types */
-import BaseLayer from './BaseLayer';
+import ModelLayer from './ModelLayer';
 
-// TODO: Move the architecture GLB/model module into src/scene/modules when ready.
-function ArchitectureLayer({ active = false }) {
-    return (
-        <BaseLayer active={active} rotationSpeed={0.15}>
-            <group />
-        </BaseLayer>
-    );
+function ArchitectureLayer(props) {
+    return <ModelLayer {...props} modelId="architecture" />;
 }
 
 export default ArchitectureLayer;

@@ -1,51 +1,72 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code (claude.ai/code) when working with this repository.
 
 ## Commands
 
 ```bash
-npm run dev        # Start development server (Vite HMR)
-npm run build      # Production build → dist/
-npm run preview    # Preview production build locally
-npm run deploy     # Deploy to GitHub Pages (gh-pages -d dist)
+npm run dev          # Start Vite dev server
+npm run build        # Production build -> dist/
+npm run preview      # Preview production build locally
+npm run lint         # ESLint over src/ and tests/
+npm run test:unit    # Jest unit tests
+npm run test:visual  # Puppeteer visual regression tests
+npm run check        # lint + unit tests + build
 ```
 
-No test or lint scripts are configured. ESLint is available via `npx eslint src/`.
+Visual tests require the Puppeteer Chrome binary:
+
+```bash
+npm run test:visual:install-browser
+```
 
 ## Architecture
 
-A React + Three.js 3D interactive CV/portfolio. Users scroll through three career stages — each rendered as a separate 3D scene layer with a React UI panel overlay.
+This is a React + Three.js cinematic CV/portfolio. The active production architecture is:
 
-### Layer System
+```text
+App.jsx
+  -> SceneRoot.jsx
+      -> life-engine systems
+      -> scene/layers/*
+      -> scene/models/*
+      -> effects/EffectsPipeline.jsx
+      -> ui/*
+```
 
-Three career layers are positioned at fixed x-offsets in the same Three.js scene:
-- **x=0** — Mechanical (ShipModel)
-- **x=5** — Architecture (ArchitectureModel)
-- **x=10** — Software (SoftwareModel)
+There is no parallel `SceneCore` architecture. Keep future scene work on this path unless a migration is intentionally planned and completed in one change.
 
-The active layer index (0–2) drives camera animation, layer scale, lighting changes, and which CV data is displayed. State lives in `App.jsx` as `useState`, passed down to `SceneRoot` and the UI panels.
-
-### Key Files
+## Key Files
 
 | File | Role |
 |---|---|
-| [src/App.jsx](src/App.jsx) | Root: holds `activeIndex` state, wires scene + UI |
-| [src/scene/SceneRoot.jsx](src/scene/SceneRoot.jsx) | Three.js `<Canvas>`, all three layer groups, camera rig, OrbitControls |
-| [src/core/useCameraController.js](src/core/useCameraController.js) | Animates camera to per-layer positions defined in `cameraState.js` |
-| [src/core/useTimelineScroll.js](src/core/useTimelineScroll.js) | Wheel event → timeline index change (800 ms debounce) |
-| [src/core/cameraState.js](src/core/cameraState.js) | Camera position/lookAt constants for each layer |
-| [src/data/timeline.js](src/data/timeline.js) | Array of 3 timeline entries (id, label, etc.) |
-| [src/data/cvData.js](src/data/cvData.js) | `CV_SECTIONS` object — all CV content keyed by layer |
-| [src/ui/NarrativePanel.jsx](src/ui/NarrativePanel.jsx) | Fixed bottom-left overlay showing active layer's CV content |
-| [src/ui/HeaderStatement.jsx](src/ui/HeaderStatement.jsx) | Fixed top-right overlay with name, contact, download button |
+| `src/App.jsx` | WebGL gate and root app shell |
+| `src/scene/SceneRoot.jsx` | Three.js canvas, lighting, chapter navigation, model layers, effects, and overlays |
+| `src/life-engine/ChapterManager.js` | Normalizes chapter config and owns active chapter state |
+| `src/life-engine/CameraDirector.js` | R3F camera transition director |
+| `src/life-engine/TransitionOrchestrator.js` | Visual-state interpolation between chapters |
+| `src/life-engine/InteractionModeManager.js` | Guided/explore OrbitControls state |
+| `src/data/lifeChapters.config.js` | Single source of truth for chapters, camera presets, lighting moods, and text |
+| `src/scene/models/modelRegistry.js` | GLB path, scale, rotation, and preload metadata |
+| `src/scene/models/ModelAsset.jsx` | Shared GLB loader/cloner/material setup |
+| `src/scene/models/useStrategicModelPreload.js` | Current/next/idle model preload policy |
+| `src/scene/layers/ModelLayer.jsx` | Shared model-backed layer behavior |
+| `src/ui/TimelineIndicator.jsx` | Accessible chapter timeline controls |
 
-### Deployment
+## Model Rules
 
-- **Base path:** `/cv-3d-portfolio/` (set in [vite.config.js](vite.config.js)) — all asset and GLB paths must use `import.meta.env.BASE_URL` as a prefix.
-- **Target:** `https://trinhminhduc9x.github.io/cv-3d-portfolio`
-- Deploy runs `gh-pages -d dist` which pushes the `dist/` folder to the `gh-pages` branch.
+- Register new GLB models in `modelRegistry.js`.
+- Render GLB files through `ModelAsset`; do not create one-off `ShipModel`/`SoftwareModel` style loaders.
+- Resolve model URLs with `import.meta.env.BASE_URL` via the registry.
+- Keep layer behavior in `ModelLayer` unless a layer has genuinely unique behavior.
+- If model files change size materially, verify first load and mobile behavior.
 
-### Styling
+## Navigation
 
-All UI component styles are inline (`style={{}}`). No CSS modules or styled-components. Global resets are in [src/index.css](src/index.css).
+Chapters are configured in `src/data/lifeChapters.config.js`. `SceneRoot` maps chapter labels into `TimelineIndicator`, and visual tests rely on the generated `aria-label="Show {Chapter} chapter"` contract.
+
+## Deployment
+
+- Base path: `/cv-3d-portfolio/` in `vite.config.js`.
+- Target: `https://trinhminhduc9x.github.io/cv-3d-portfolio`.
+- GitHub Actions run lint, unit tests, build, install Puppeteer Chrome, and visual tests.

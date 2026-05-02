@@ -8,7 +8,7 @@
 
 > **usePerformanceProfile**(): `object`
 
-Defined in: src/scene/performance/usePerformanceProfile.js:43
+Defined in: [src/scene/performance/usePerformanceProfile.js:43](https://github.com/trinhminhduc9x/cv-3d-portfolio/blob/8ef3842b2deed0b5bbf22894a612c1dc8aed0901/src/scene/performance/usePerformanceProfile.js#L43)
 
 ## Returns
 

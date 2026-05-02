@@ -20,13 +20,15 @@ import ScrollHint from '../ui/ScrollHint';
 import LoadingScreen from '../ui/LoadingScreen';
 import TextRevealSystem from '../ui/TextRevealSystem';
 import FadeOverlay from '../ui/FadeOverlay';
+import EarnedCodeChest from '../ui/EarnedCodeChest';
 
-import MechanicalLayer from './MechanicalLayer';
-import ArchitectureLayer from './ArchitectureLayer';
-import SoftwareLayer from './SoftwareLayer';
+import MechanicalLayer from './layers/MechanicalLayer';
+import ArchitectureLayer from './layers/ArchitectureLayer';
+import SoftwareLayer from './layers/SoftwareLayer';
 import ParticleField from './ParticleField';
 import LazyLayerMount from './performance/LazyLayerMount';
 import { usePerformanceProfile } from './performance/usePerformanceProfile';
+import { useStrategicModelPreload } from './models/useStrategicModelPreload';
 
 const FINAL_CHAPTER_ID = CHAPTER_SEQUENCE[CHAPTER_SEQUENCE.length - 1];
 
@@ -309,6 +311,12 @@ function SceneRoot() {
     }, [chapters.length, currentIndex, navigateToIndex]);
 
     const { shadowMapSize } = performanceProfile;
+    useStrategicModelPreload({
+        chapters,
+        currentIndex,
+        preloadRemaining: !performanceProfile.lowEnd,
+    });
+
     const mechanicalVisible = visualState.mechanicalOpacity > 0.02;
     const architectureVisible = visualState.architectureOpacity > 0.02;
     const softwareVisible = visualState.softwareOpacity > 0.02;
@@ -442,6 +450,7 @@ function SceneRoot() {
             </Canvas>
 
             <HeaderStatement />
+            <EarnedCodeChest chapter={currentChapter} transitioning={visualState.active} />
             <TextRevealSystem chapter={currentChapter} transitioning={visualState.active} />
             <TimelineIndicator index={currentIndex} onNavigate={navigateToIndex} items={timelineItems} />
             <LifeModeControls interaction={interaction} exploreUnlocked={exploreUnlocked} />

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 
 /**
  * Reveals chapter text as timed cinematic captions.
+ * Each item in textSequence may be a plain string or a { vi, en } bilingual object.
  *
  * @param {object} props Text reveal props.
  * @param {object} props.chapter Active chapter.
@@ -40,6 +41,7 @@ function TextRevealSystem({ chapter, transitioning }) {
                 zIndex: 14,
             }}
         >
+            {/* Chapter label */}
             <div
                 style={{
                     fontSize: 11,
@@ -53,22 +55,57 @@ function TextRevealSystem({ chapter, transitioning }) {
             >
                 {chapter.label}
             </div>
-            {lines.map((line, i) => (
-                <p
-                    key={i}
-                    style={{
-                        margin: i > 0 ? '10px 0 0' : 0,
-                        fontSize: 18,
-                        lineHeight: 1.55,
-                        textShadow: '0 10px 30px rgba(0, 0, 0, 0.65)',
-                        opacity: visible && !transitioning ? 1 : 0,
-                        transform: visible && !transitioning ? 'translateY(0)' : 'translateY(10px)',
-                        transition: `opacity ${480 + i * 120}ms ease, transform ${480 + i * 120}ms ease`,
-                    }}
-                >
-                    {line}
-                </p>
-            ))}
+
+            {/* Text blocks — each item is { vi, en } or a plain string */}
+            {lines.map((item, i) => {
+                const isBilingual = item !== null && typeof item === 'object';
+                const vi = isBilingual ? item.vi : item;
+                const en = isBilingual ? item.en : null;
+                const isShowing = visible && !transitioning;
+                const delay = 480 + i * 140;
+
+                return (
+                    <div
+                        key={i}
+                        style={{
+                            marginTop: i > 0 ? 14 : 0,
+                            opacity: isShowing ? 1 : 0,
+                            transform: isShowing ? 'translateY(0)' : 'translateY(10px)',
+                            transition: `opacity ${delay}ms ease, transform ${delay}ms ease`,
+                        }}
+                    >
+                        {/* Vietnamese — primary */}
+                        <p
+                            style={{
+                                margin: 0,
+                                fontSize: 18,
+                                lineHeight: 1.55,
+                                color: '#ffffff',
+                                textShadow: '0 10px 30px rgba(0, 0, 0, 0.65)',
+                            }}
+                        >
+                            {vi}
+                        </p>
+
+                        {/* English — secondary, shown only for bilingual items */}
+                        {en && (
+                            <p
+                                style={{
+                                    margin: '4px 0 0',
+                                    fontSize: 13,
+                                    lineHeight: 1.5,
+                                    fontStyle: 'italic',
+                                    color: 'rgba(135, 206, 235, 0.55)',
+                                    textShadow: '0 6px 20px rgba(0, 0, 0, 0.5)',
+                                    letterSpacing: 0.2,
+                                }}
+                            >
+                                {en}
+                            </p>
+                        )}
+                    </div>
+                );
+            })}
         </section>
     );
 }

@@ -12,4 +12,5 @@
 
 ## Functions
 
+- [initializeShaderChunks](functions/initializeShaderChunks.md)
 - [isWebGLSupported](functions/isWebGLSupported.md)
