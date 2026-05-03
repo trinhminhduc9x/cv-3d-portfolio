@@ -1,4 +1,19 @@
+import { PORTFOLIO_PROFILE } from '../data/narrative.config';
+
 function HeaderStatement() {
+    const {
+        displayName,
+        titleLine,
+        eyebrow,
+        location,
+        phoneDisplay,
+        phoneTel,
+        email,
+        profileUrl,
+        profileLabel,
+        cvDownloadUrl,
+    } = PORTFOLIO_PROFILE;
+
     return (
         <header
             aria-labelledby="profile-heading"
@@ -18,6 +33,18 @@ function HeaderStatement() {
             }}
         >
             <div style={{ marginBottom: 16 }}>
+                <p
+                    style={{
+                        margin: '0 0 6px',
+                        fontSize: 11,
+                        letterSpacing: '0.14em',
+                        textTransform: 'uppercase',
+                        color: 'rgba(135, 206, 235, 0.85)',
+                        fontWeight: 600,
+                    }}
+                >
+                    {eyebrow}
+                </p>
                 <h1
                     id="profile-heading"
                     style={{
@@ -28,7 +55,7 @@ function HeaderStatement() {
                         color: '#ffffff',
                     }}
                 >
-                    Trinh Minh Duc
+                    {displayName}
                 </h1>
                 <div
                     style={{
@@ -36,9 +63,10 @@ function HeaderStatement() {
                         color: '#87ceeb',
                         marginTop: 6,
                         fontWeight: 500,
+                        lineHeight: 1.35,
                     }}
                 >
-                    Software Engineer | 3D Systems & Visualization
+                    {titleLine}
                 </div>
             </div>
 
@@ -55,31 +83,52 @@ function HeaderStatement() {
                 }}
             >
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
-                    <span aria-hidden="true" style={{ color: '#87ceeb', fontWeight: 600 }}>Loc</span>
-                    <span>Da Nang, Vietnam</span>
+                    <span aria-hidden="true" style={{ color: '#87ceeb', fontWeight: 600 }}>
+                        Loc
+                    </span>
+                    <span>{location}</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
-                    <span aria-hidden="true" style={{ color: '#87ceeb', fontWeight: 600 }}>Mail</span>
+                    <span aria-hidden="true" style={{ color: '#87ceeb', fontWeight: 600 }}>
+                        Mail
+                    </span>
                     <a
-                        href="mailto:tmduc.dev@gmail.com"
-                        aria-label="Email Trinh Minh Duc"
+                        href={`mailto:${email}`}
+                        aria-label={`Email ${displayName}`}
                         style={{ color: '#ffffff', textDecoration: 'none' }}
                     >
-                        tmduc.dev@gmail.com
+                        {email}
+                    </a>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+                    <span aria-hidden="true" style={{ color: '#87ceeb', fontWeight: 600 }}>
+                        Tel
+                    </span>
+                    <a
+                        href={`tel:${phoneTel}`}
+                        aria-label={`Phone ${displayName}`}
+                        style={{ color: '#ffffff', textDecoration: 'none' }}
+                    >
+                        {phoneDisplay}
                     </a>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                    <span aria-hidden="true" style={{ color: '#87ceeb', fontWeight: 600 }}>Tel</span>
-                    <span>+84 975 514 667</span>
+                    <span aria-hidden="true" style={{ color: '#87ceeb', fontWeight: 600 }}>
+                        Web
+                    </span>
+                    <a
+                        href={profileUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Profile and links (opens in new tab)"
+                        style={{ color: '#ffffff', textDecoration: 'none' }}
+                    >
+                        {profileLabel}
+                    </a>
                 </div>
             </address>
 
-            <a
-                href="https://drive.google.com/file/d/1t3d7xtGQSKnYM_iHsHQs6PsBugmzO-JW/view?usp=sharing"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ textDecoration: 'none' }}
-            >
+            <a href={cvDownloadUrl} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
                 <button
                     aria-label="Open full CV in a new tab"
                     style={{
@@ -103,6 +152,7 @@ function HeaderStatement() {
                         event.currentTarget.style.transform = 'translateY(0)';
                         event.currentTarget.style.boxShadow = '0 4px 12px rgba(74, 144, 226, 0.3)';
                     }}
+                    type="button"
                 >
                     Download Full CV
                 </button>
@@ -119,7 +169,7 @@ function HeaderStatement() {
                     fontStyle: 'italic',
                 }}
             >
-                Engineering / Architecture / Software
+                Real-time 3D · Engine · Tools
             </div>
         </header>
     );

@@ -46,12 +46,12 @@ export const LIFE_CHAPTERS = [
         },
         textSequence: [
             {
-                vi: 'Mỗi sự nghiệp vĩ đại đều có hình dạng riêng — nhìn từ gần chỉ thấy bước tiếp theo, nhìn từ xa mới thấy toàn bộ hành trình.',
-                en: 'Every great career has its own shape — up close you see only the next step; only from a distance does the full journey reveal itself.',
+                vi: 'Mỗi sự nghiệp đều có hình dáng — con đường này hướng tới hệ thống thời gian thực, engine, công cụ, và đôi khi cả trò chơi trong tab trình duyệt.',
+                en: 'Every career has a shape — this one bends toward real-time systems, engines, tools, and sometimes games living inside a browser tab.',
             },
             {
-                vi: 'Con đường này đi qua thép, qua ánh sáng, rồi đến với code — cuộn xuống để thấy nó dần hiện ra.',
-                en: 'This one moves through steel, through light, and into code — scroll to watch it unfold.',
+                vi: 'Cuộn xuống: từ thép và form mạn tàu, qua ánh sáng của visualization, rồi tới C++, WebSocket và không gian 3D phản hồi từng khung hình.',
+                en: 'Scroll through it — from steel and ship hulls, through the light of visualization, into C++, WebSockets, and 3D that answers every frame.',
             },
         ],
     },
@@ -96,12 +96,12 @@ export const LIFE_CHAPTERS = [
         },
         textSequence: [
             {
-                vi: 'Tất cả bắt đầu tại xưởng cơ khí — nơi sai số tính bằng phần nghìn milimet, nơi mỗi chi tiết phải chịu đựng sức nặng không khoan nhượng của thực tế.',
-                en: 'Everything began on the workshop floor — where error is measured in thousandths of a millimeter and every part must bear the unforgiving weight of reality.',
+                vi: 'Tất cả bắt đầu tại xưởng — Cử nhân kỹ thuật tàu thủy: form mạn, ổn định, sức cản, kết cấu; sai số đo bằng phần nghìn milimet cùng toán và số áp dụng.',
+                en: 'It began in the workshop — a B.Eng. in ship engineering: hulls, stability, resistance, structure; error in thousandths of a millimeter, with applied math and numerics.',
             },
             {
-                vi: 'Con tàu kia không chỉ là mô hình — đó là tượng đài của kỷ luật đầu tiên, nơi không gian 3D được hiểu bằng trách nhiệm chứ không phải thẩm mỹ.',
-                en: 'That ship is not merely a model — it is a monument to first discipline, where 3D space was understood through accountability, not aesthetics.',
+                vi: 'Mô hình tàu là bài tập kỷ luật: không gian 3D gắn với tải trọng, biên giới, trách nhiệm — trước khi engine hay game nào được viết.',
+                en: 'The ship model was discipline: 3D space bound to load, boundaries, accountability — long before any engine or game code was written.',
             },
         ],
     },
@@ -149,12 +149,12 @@ export const LIFE_CHAPTERS = [
         },
         textSequence: [
             {
-                vi: 'Rồi kiến trúc đến như một giác ngộ — khi hình học không còn chỉ phải đúng, mà phải đẹp, phải khiến người ta dừng lại và cảm nhận điều gì đó không thể gọi tên.',
-                en: 'Then architecture arrived like an awakening — when geometry could no longer merely be correct, but had to be beautiful, had to make people stop and feel something nameless.',
+                vi: 'Giai đoạn visualization: kiến trúc và nội thất thành khối đặt giữa khung hình — ánh sáng, máy ảnh, render; học cách khiến không gian thuyết phục người xem.',
+                en: 'The visualization chapter — architecture and interiors staged as volumes; light, camera, rendering; learning to make space persuade the eye.',
             },
             {
-                vi: 'Ánh sáng trở thành ngôn ngữ, bóng đổ trở thành ý nghĩa — và người kỹ sư lần đầu tiên học cách khiến không gian biết kể chuyện.',
-                en: 'Light became language, shadow became meaning — and the engineer learned for the first time how to make space tell a story.',
+                vi: 'Hình học không chỉ đúng — phải mời gọi. Nền tảng cho mọi pipeline thị giác và tư duy không gian trong công việc 3D sau này.',
+                en: 'Geometry had to be not only correct but inviting — groundwork for every visual pipeline and spatial habit that followed.',
             },
         ],
     },
@@ -201,12 +201,12 @@ export const LIFE_CHAPTERS = [
         },
         textSequence: [
             {
-                vi: 'Code đến như một ngọn lửa — C++ và hình học tính toán biến ba năm tư duy không gian thành những hệ thống sống, thở và di chuyển theo thời gian thực.',
-                en: 'Code arrived like fire — C++ and computational geometry forged three years of spatial thinking into systems that live, breathe, and move in real time.',
+                vi: 'Code bùng lên — C++ và hình học tính toán; hệ 3D thời gian thực xử lý dữ liệu lớn, cập nhật trạng thái và tương tác tách lớp.',
+                en: 'Code caught fire — C++ and computational geometry; real-time 3D at scale, layered data, state, and interaction.',
             },
             {
-                vi: 'Raycasts xuyên bóng tối, cây BVH phân tách thế giới, va chạm vang lên như sấm — đây là hạ tầng vô hình làm cho không gian 3D trở nên có thật dưới chân.',
-                en: 'Raycasts pierce the dark, BVH trees split the world, collisions ring out like thunder — the invisible infrastructure that makes 3D space feel real beneath your feet.',
+                vi: 'Phiên chạy qua WebSocket đồng bộ trạng thái; thế giới phẳng trong trình duyệt — WebGL và Three.js gặp vòng lặp game, va chạm, camera.',
+                en: 'Sessions sync state over WebSockets; flat worlds run in the browser — WebGL and Three.js meet the loop, collisions, and camera.',
             },
         ],
         links: [
@@ -214,6 +214,11 @@ export const LIFE_CHAPTERS = [
                 label: 'Play Cyber Runner 3D',
                 url: 'https://tmducdev-source.github.io/cyber-runner-3d-game/',
                 type: 'game',
+            },
+            {
+                label: 'Profile & links',
+                url: 'https://bit.ly/minhduc-profile',
+                type: 'profile',
             },
         ],
     },
@@ -256,12 +261,12 @@ export const LIFE_CHAPTERS = [
         },
         textSequence: [
             {
-                vi: 'Ngọn lửa không tắt — nó trở nên ổn định hơn. Ít thủ thuật, nhiều sự rõ ràng. Kiến trúc vững lại như đá, và code bắt đầu nói bằng sự im lặng có chủ ý.',
-                en: 'The fire did not die — it steadied. Fewer tricks, more clarity. The architecture set like stone, and the code began to speak through deliberate silence.',
+                vi: 'Lửa nguội thành hệ thống — kiến trúc module, validation, automation; sự kiện lan qua đồ thị phụ thuộc để khung cảnh 2D/3D không vỡ giữa chừng.',
+                en: 'Fire cooled into systems — modular architecture, validation, automation; events rippling through dependency graphs so 2D/3D scenes stay coherent.',
             },
             {
-                vi: 'Kỷ luật kỹ thuật không biến mất khi trở thành phần mềm — nó trở thành nền móng mà mọi quyết định trong hệ thống đều phải trả lời.',
-                en: 'Engineering discipline does not vanish when it becomes software — it becomes the bedrock that every decision in the system must answer to.',
+                vi: 'Real-time 3D đầy đủ ý nghĩa từ 2023: ít mánh lới, nhiều độ tin cậy — kỷ luật kỹ thuật vẫn là nền mà mọi quyết định trong pipeline phải trả lời.',
+                en: 'Full-weight real-time 3D from 2023 onward — fewer tricks, more trust; engineering discipline remains the bedrock every pipeline decision must answer to.',
             },
         ],
     },
@@ -294,16 +299,31 @@ export const LIFE_CHAPTERS = [
         },
         textSequence: [
             {
-                vi: 'Phía trước là khoảng không chưa được vẽ — engine hình học chờ được xây, không gian 3D chờ được thổi hồn, những công cụ chờ được rèn giũa bởi đôi tay đã qua lửa.',
-                en: 'Ahead lies unmapped space — geometry engines waiting to be built, 3D worlds waiting to be given soul, tools waiting to be forged by hands that have been through fire.',
+                vi: 'Phía trước: engine và công cụ chưa đặt tên, multiplayer và không gian chưa vẽ hết — real-time, pipeline, và những vòng lặp còn chờ ai đó viết tiếp.',
+                en: 'Ahead: unnamed engines and tools, unfinished multiplayer spaces — real-time, pipelined, loops still waiting for the next hand on the keyboard.',
             },
             {
-                vi: 'Màn hình đã mở. Thế giới này là của bạn.',
-                en: 'The viewport is open. This world is yours.',
+                vi: 'Màn hình đã mở. Khung tiếp theo là của người xây nền và công cụ.',
+                en: 'The viewport is open. The next frame belongs to whoever builds the foundation and the tools.',
             },
         ],
     },
 ];
+
+/** Public profile and CV links — keep in sync with HOME/index.html. */
+export const PORTFOLIO_PROFILE = {
+    displayName: 'Trịnh Minh Đức',
+    titleLine: 'Software Engineer · Real-Time Systems · 3D Graphics · Engine & Tools',
+    eyebrow: 'Game Dev / Engine / Tools',
+    location: 'Da Nang, Vietnam',
+    phoneDisplay: '+84 975 514 667',
+    phoneTel: '+84975514667',
+    email: 'tmduc.dev@gmail.com',
+    profileUrl: 'https://bit.ly/minhduc-profile',
+    profileLabel: 'bit.ly/minhduc-profile',
+    cvDownloadUrl:
+        'https://drive.google.com/file/d/1t3d7xtGQSKnYM_iHsHQs6PsBugmzO-JW/view?usp=sharing',
+};
 
 export const LIFE_CHAPTER_MAP = LIFE_CHAPTERS.reduce((accumulator, chapter) => {
     accumulator[chapter.id] = chapter;
