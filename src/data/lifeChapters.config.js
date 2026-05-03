@@ -1,4 +1,4 @@
-export const CHAPTER_SEQUENCE = [
+﻿export const CHAPTER_SEQUENCE = [
     'prologue',
     'origin',
     'awakening',
@@ -46,12 +46,12 @@ export const LIFE_CHAPTERS = [
         },
         textSequence: [
             {
-                vi: 'Mỗi sự nghiệp đều có hình dáng — con đường này hướng tới hệ thống thời gian thực, engine, công cụ, và đôi khi cả trò chơi trong tab trình duyệt.',
-                en: 'Every career has a shape — this one bends toward real-time systems, engines, tools, and sometimes games living inside a browser tab.',
+                vi: 'Trước khi có một dòng code — có ý chí. Trước khi có engine — có người quyết định leo lên. Hành trình này không dành cho kẻ đứng nhìn; nó được đúc bằng tay, khắc bằng đêm, và đốt cháy bằng những câu hỏi không chịu tắt.',
+                en: 'Before a single line of code — there was will. Before an engine — there was one who decided to climb. This journey was not made for observers; it was cast by hand, carved through night, and fueled by questions that refused to die.',
             },
             {
-                vi: 'Cuộn xuống: từ thép và form mạn tàu, qua ánh sáng của visualization, rồi tới C++, WebSocket và không gian 3D phản hồi từng khung hình.',
-                en: 'Scroll through it — from steel and ship hulls, through the light of visualization, into C++, WebSockets, and 3D that answers every frame.',
+                vi: 'Từ buồng máy tàu đến đỉnh real-time 3D, từ thép đến shader, từ bản vẽ kỹ thuật đến khung hình sống trong trình duyệt — đây là bản đồ của một người đã chiến đấu để hiểu, không chỉ để biết.',
+                en: 'From the engine room of ships to the summit of real-time 3D, from steel to shaders, from technical blueprints to frames alive in the browser — this is the map of one who fought to understand, not merely to know.',
             },
         ],
     },
@@ -96,12 +96,12 @@ export const LIFE_CHAPTERS = [
         },
         textSequence: [
             {
-                vi: 'Tất cả bắt đầu tại xưởng — Cử nhân kỹ thuật tàu thủy: form mạn, ổn định, sức cản, kết cấu; sai số đo bằng phần nghìn milimet cùng toán và số áp dụng.',
-                en: 'It began in the workshop — a B.Eng. in ship engineering: hulls, stability, resistance, structure; error in thousandths of a millimeter, with applied math and numerics.',
+                vi: 'Lò rèn đầu tiên là xưởng thép — nơi hình học không tha thứ sai số, nơi vật lý phán xét từng quyết định. Kỹ thuật tàu thủy không dạy lý thuyết; nó ép người học đứng trước thực thể nặng nghìn tấn và chứng minh mình đúng.',
+                en: 'The first forge was a steel workshop — where geometry forgave no error, where physics judged every decision. Naval engineering did not teach theory; it forced the student to stand before a thousand-ton mass and prove their calculations true.',
             },
             {
-                vi: 'Mô hình tàu là bài tập kỷ luật: không gian 3D gắn với tải trọng, biên giới, trách nhiệm — trước khi engine hay game nào được viết.',
-                en: 'The ship model was discipline: 3D space bound to load, boundaries, accountability — long before any engine or game code was written.',
+                vi: 'Bài toán ổn định, sức cản, kết cấu — không phải bài tập, mà là thử thách sinh tử của tư duy. Từ đây, tư duy 3D được rèn không bằng cảm hứng, mà bằng trách nhiệm trước từng đường cong của thân tàu.',
+                en: 'Stability, resistance, structure — not exercises, but trials where thinking either held or broke. Here, 3D thinking was forged not by inspiration, but by accountability to every curve of the hull.',
             },
         ],
     },
@@ -149,12 +149,12 @@ export const LIFE_CHAPTERS = [
         },
         textSequence: [
             {
-                vi: 'Giai đoạn visualization: kiến trúc và nội thất thành khối đặt giữa khung hình — ánh sáng, máy ảnh, render; học cách khiến không gian thuyết phục người xem.',
-                en: 'The visualization chapter — architecture and interiors staged as volumes; light, camera, rendering; learning to make space persuade the eye.',
+                vi: 'Rồi ánh sáng mở một mặt trận khác — visualization là ngôn ngữ thứ hai của người làm chủ không gian. Kiến trúc, nội thất, môi trường: mỗi khung hình là một tuyên ngôn về ánh sáng, vật liệu và ý chí.',
+                en: 'Then light opened another front — visualization was the second language of one who commanded space. Architecture, interiors, environments: every frame was a declaration of light, material, and intent.',
             },
             {
-                vi: 'Hình học không chỉ đúng — phải mời gọi. Nền tảng cho mọi pipeline thị giác và tư duy không gian trong công việc 3D sau này.',
-                en: 'Geometry had to be not only correct but inviting — groundwork for every visual pipeline and spatial habit that followed.',
+                vi: 'Từ đây, hình học mang thêm nhiệm vụ: không chỉ đúng, mà phải thuyết phục. Mắt học cách đọc lực — cách không gian kéo người xem, cách bóng tối xây chiều sâu — nền móng cho mọi pipeline 3D phía trước.',
+                en: 'From here, geometry carried a second duty: not only correct, but convincing. The eye learned to read force — how space draws the viewer, how shadow builds depth — the foundation beneath every 3D pipeline to come.',
             },
         ],
     },
@@ -201,12 +201,12 @@ export const LIFE_CHAPTERS = [
         },
         textSequence: [
             {
-                vi: 'Code bùng lên — C++ và hình học tính toán; hệ 3D thời gian thực xử lý dữ liệu lớn, cập nhật trạng thái và tương tác tách lớp.',
-                en: 'Code caught fire — C++ and computational geometry; real-time 3D at scale, layered data, state, and interaction.',
+                vi: 'Lò rèn thứ hai bùng lên từ code — C++, hình học tính toán, vòng lặp real-time. Không còn là thế giới tĩnh của bản vẽ; đây là chiến trường nơi dữ liệu, trạng thái và vật lý phải vận hành cùng nhau trong từng mili-giây.',
+                en: 'The second forge erupted from code — C++, computational geometry, real-time loops. No longer the static world of blueprints; this was a battlefield where data, state, and physics had to run together within every millisecond.',
             },
             {
-                vi: 'Phiên chạy qua WebSocket đồng bộ trạng thái; thế giới phẳng trong trình duyệt — WebGL và Three.js gặp vòng lặp game, va chạm, camera.',
-                en: 'Sessions sync state over WebSockets; flat worlds run in the browser — WebGL and Three.js meet the loop, collisions, and camera.',
+                vi: 'WebSocket đồng bộ phiên chiến; WebGL và Three.js dựng những thế giới sống trong trình duyệt. Vòng lặp game, va chạm, camera — không phải đỉnh leo một lần, mà leo lại mỗi ngày cho đến khi hiểu tận cùng.',
+                en: 'WebSockets synchronized the battle session; WebGL and Three.js raised living worlds inside the browser. The game loop, collisions, camera — not peaks climbed once, but climbed again each day until understood to their core.',
             },
         ],
         links: [
@@ -261,12 +261,12 @@ export const LIFE_CHAPTERS = [
         },
         textSequence: [
             {
-                vi: 'Lửa nguội thành hệ thống — kiến trúc module, validation, automation; sự kiện lan qua đồ thị phụ thuộc để khung cảnh 2D/3D không vỡ giữa chừng.',
-                en: 'Fire cooled into systems — modular architecture, validation, automation; events rippling through dependency graphs so 2D/3D scenes stay coherent.',
+                vi: 'Ngọn lửa cần được kiềm chế để cháy lâu hơn — module, validation, automation, dependency graph: kỷ luật biến cảm hứng thành kiến trúc. Không phải code chạy được, mà code đứng vững trước thời gian.',
+                en: 'Fire must be disciplined to burn longer — modules, validation, automation, dependency graphs: the craft of turning inspiration into architecture. Not code that runs, but code that stands against time.',
             },
             {
-                vi: 'Real-time 3D đầy đủ ý nghĩa từ 2023: ít mánh lới, nhiều độ tin cậy — kỷ luật kỹ thuật vẫn là nền mà mọi quyết định trong pipeline phải trả lời.',
-                en: 'Full-weight real-time 3D from 2023 onward — fewer tricks, more trust; engineering discipline remains the bedrock every pipeline decision must answer to.',
+                vi: 'Đến đây, real-time 3D không còn là mục tiêu — nó trở thành tiêu chuẩn: mỗi pipeline phải chịu được sức nặng của thực tế, mỗi quyết định kỹ thuật phải đứng vững trước tương lai. Thép tốt không kêu to.',
+                en: 'By now, real-time 3D was no longer a goal — it became the standard: every pipeline must bear the weight of reality, every engineering decision must stand against the future. Good steel does not ring loud.',
             },
         ],
     },
@@ -299,12 +299,12 @@ export const LIFE_CHAPTERS = [
         },
         textSequence: [
             {
-                vi: 'Phía trước: engine và công cụ chưa đặt tên, multiplayer và không gian chưa vẽ hết — real-time, pipeline, và những vòng lặp còn chờ ai đó viết tiếp.',
-                en: 'Ahead: unnamed engines and tools, unfinished multiplayer spaces — real-time, pipelined, loops still waiting for the next hand on the keyboard.',
+                vi: 'Phía trước là những engine chưa có tên, những công cụ chưa thành hình, những thế giới multiplayer chưa vẽ xong — không phải khoảng trống đáng sợ, mà là vương quốc chưa được chinh phục, đang chờ người dám bước vào.',
+                en: 'Ahead are nameless engines, unbuilt tools, unfinished multiplayer worlds — not voids to fear, but unconquered kingdoms waiting for one who dares to enter.',
             },
             {
-                vi: 'Màn hình đã mở. Khung tiếp theo là của người xây nền và công cụ.',
-                en: 'The viewport is open. The next frame belongs to whoever builds the foundation and the tools.',
+                vi: 'Viewport đã mở. Không có điểm kết — chỉ có điểm tiếp theo, cao hơn, sâu hơn, rộng hơn. Khung hình tiếp theo thuộc về người học không nghỉ, rèn không ngại, và xây nền móng đủ vững để chống đỡ cả những thế giới chưa tồn tại.',
+                en: 'The viewport is open. There is no endpoint — only the next, higher, deeper, wider. The next frame belongs to one who learns without rest, forges without fear, and builds foundations strong enough to hold worlds that do not yet exist.',
             },
         ],
     },
