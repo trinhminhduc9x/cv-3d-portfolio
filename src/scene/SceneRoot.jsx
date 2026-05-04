@@ -21,6 +21,7 @@ import LoadingScreen from '../ui/LoadingScreen';
 import TextRevealSystem from '../ui/TextRevealSystem';
 import FadeOverlay from '../ui/FadeOverlay';
 import EarnedCodeChest from '../ui/EarnedCodeChest';
+import MusicToggle from '../ui/MusicToggle';
 
 import MechanicalLayer from './layers/MechanicalLayer';
 import ArchitectureLayer from './layers/ArchitectureLayer';
@@ -454,6 +455,7 @@ function SceneRoot() {
             <TextRevealSystem chapter={currentChapter} transitioning={visualState.active} />
             <TimelineIndicator index={currentIndex} onNavigate={navigateToIndex} items={timelineItems} />
             <LifeModeControls interaction={interaction} exploreUnlocked={exploreUnlocked} />
+            <MusicToggle />
             <FadeOverlay opacity={visualState.fadeOverlay} />
             <ScrollHint />
             <LoadingScreen />
