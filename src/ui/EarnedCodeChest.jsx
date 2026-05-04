@@ -14,14 +14,23 @@ const KEYFRAMES = `
 }
 `;
 
-function useWindowWidth() {
-    const [width, setWidth] = useState(() => window.innerWidth);
+function useViewportSize() {
+    const [size, setSize] = useState(() => ({
+        width: window.innerWidth,
+        height: window.innerHeight,
+    }));
+
     useEffect(() => {
-        const handler = () => setWidth(window.innerWidth);
+        const handler = () => setSize({
+            width: window.innerWidth,
+            height: window.innerHeight,
+        });
+
         window.addEventListener('resize', handler);
         return () => window.removeEventListener('resize', handler);
     }, []);
-    return width;
+
+    return size;
 }
 
 /**
@@ -34,11 +43,11 @@ function useWindowWidth() {
 function EarnedCodeChest({ chapter, transitioning }) {
     const [visible, setVisible] = useState(false);
     const [gameHover, setGameHover] = useState(false);
-    const windowWidth = useWindowWidth();
+    const { width: windowWidth, height: windowHeight } = useViewportSize();
 
     const show = (chapter?.links?.length ?? 0) > 0;
-    const isTablet = windowWidth >= 900 && windowWidth < 1200;
-    const isMobile = windowWidth < 900;
+    const isCompactDesktop = windowWidth < 1200;
+    const hasLauncherSpace = windowWidth >= 1100 && windowHeight >= 720;
 
     useEffect(() => {
         const styleId = 'earned-code-chest-kf';
@@ -51,17 +60,17 @@ function EarnedCodeChest({ chapter, transitioning }) {
     }, []);
 
     useEffect(() => {
-        if (!show || isMobile) { setVisible(false); return; }
+        if (!show || !hasLauncherSpace) { setVisible(false); return; }
         setVisible(false);
         const t = window.setTimeout(() => setVisible(true), 500);
         return () => window.clearTimeout(t);
-    }, [chapter?.id, show, isMobile]);
+    }, [chapter?.id, show, hasLauncherSpace]);
 
-    if (!show || isMobile) return null;
+    if (!show || !hasLauncherSpace) return null;
 
-    const right = isTablet ? 18 : 30;
-    const top = isTablet ? 320 : 350;
-    const cardWidth = isTablet ? 270 : 310;
+    const left = isCompactDesktop ? 18 : 30;
+    const top = 20;
+    const cardWidth = isCompactDesktop ? 270 : 310;
     const isShowing = visible && !transitioning;
 
     return (
@@ -69,13 +78,14 @@ function EarnedCodeChest({ chapter, transitioning }) {
             aria-label="Game launcher panel"
             style={{
                 position: 'fixed',
-                right,
+                left,
                 top,
                 width: cardWidth,
+                boxSizing: 'border-box',
                 zIndex: 14,
                 pointerEvents: 'auto',
                 opacity: isShowing ? 1 : 0,
-                transform: isShowing ? 'translateX(0)' : 'translateX(28px)',
+                transform: isShowing ? 'translateX(0)' : 'translateX(-28px)',
                 transition: 'opacity 550ms ease, transform 550ms ease',
                 filter: isShowing
                     ? 'drop-shadow(0 0 22px rgba(0,234,255,0.14))'
@@ -100,10 +110,11 @@ function EarnedCodeChest({ chapter, transitioning }) {
                         display: 'flex',
                         alignItems: 'flex-start',
                         justifyContent: 'space-between',
+                        gap: 12,
                         marginBottom: 10,
                     }}
                 >
-                    <div>
+                    <div style={{ minWidth: 0 }}>
                         <div
                             style={{
                                 fontSize: 9,
@@ -128,7 +139,10 @@ function EarnedCodeChest({ chapter, transitioning }) {
                             LAUNCH GAME
                         </div>
                     </div>
-                    <span style={{ fontSize: 18, lineHeight: 1, marginTop: 2 }} aria-hidden="true">
+                    <span
+                        style={{ flexShrink: 0, fontSize: 18, lineHeight: 1, marginTop: 2 }}
+                        aria-hidden="true"
+                    >
                         🎮
                     </span>
                 </div>
@@ -258,6 +272,7 @@ function EarnedCodeChest({ chapter, transitioning }) {
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'space-between',
+                                gap: 8,
                                 marginBottom: 4,
                             }}
                         >
@@ -266,9 +281,12 @@ function EarnedCodeChest({ chapter, transitioning }) {
                                     fontSize: 13,
                                     fontWeight: 700,
                                     letterSpacing: 1.8,
+                                    lineHeight: 1.25,
+                                    minWidth: 0,
                                     color: gameHover ? '#ffffff' : 'rgba(255,255,255,0.92)',
                                     textTransform: 'uppercase',
                                     transition: 'color 200ms ease',
+                                    overflowWrap: 'anywhere',
                                 }}
                             >
                                 CYBER RUNNER 3D
@@ -283,6 +301,8 @@ function EarnedCodeChest({ chapter, transitioning }) {
                                     borderRadius: 4,
                                     padding: '2px 6px',
                                     background: 'rgba(0,234,255,0.08)',
+                                    flexShrink: 0,
+                                    whiteSpace: 'nowrap',
                                     boxShadow: gameHover ? '0 0 8px rgba(0,234,255,0.3)' : 'none',
                                     transition: 'box-shadow 200ms ease',
                                 }}
