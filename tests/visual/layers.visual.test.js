@@ -162,14 +162,28 @@ describe('CV 3D chapter visual regression', () => {
     test.each(CHAPTERS)('%s chapter renders consistently', async (chapter) => {
         const page = await browser.newPage();
         await page.setViewport({ width: 1280, height: 720, deviceScaleFactor: 1 });
-        await page.goto(BASE_URL, { waitUntil: 'networkidle0' });
+        // Skip the first-visit IntroBriefing gate (ADR-0003) — these tests
+        // exercise steady-state chapter rendering, not the intro flow.
+        await page.evaluateOnNewDocument(() => {
+            try {
+                window.localStorage.setItem('cv3d:intro-seen', '1');
+            } catch {
+                // Storage unavailable — IntroBriefing will show once per test,
+                // which is harmless (Prologue is the default active chapter).
+            }
+        });
+        // Vite's dev-server HMR WebSocket stays open indefinitely, so
+        // 'networkidle0' never resolves here — 'load' is what actually
+        // signals the page is ready; readiness beyond that is verified by
+        // the explicit selector waits below.
+        await page.goto(BASE_URL, { waitUntil: 'load' });
         await page.waitForSelector(`[aria-label="Show ${chapter} chapter"]`);
         await page.click(`[aria-label="Show ${chapter} chapter"]`);
         await page.waitForSelector('[aria-label^="Loading 3D portfolio"]', {
             hidden: true,
             timeout: 45000,
         });
-        await page.waitForTimeout(1200);
+        await new Promise((resolve) => { setTimeout(resolve, 1200); });
 
         const screenshot = await page.screenshot({ fullPage: false });
         await compareWithBaseline(chapter.toLowerCase(), screenshot);
