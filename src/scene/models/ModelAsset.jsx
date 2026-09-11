@@ -4,6 +4,7 @@ import { useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
 
 import { getModelConfig, getModelUrl } from './modelRegistry';
+import { useExplodedDisassembly } from './useExplodedDisassembly';
 
 function asVector3Array(value, fallback = [1, 1, 1]) {
     if (Array.isArray(value) && value.length === 3) {
@@ -86,7 +87,7 @@ function cloneSceneForModel(scene, config) {
     return clone;
 }
 
-function ModelAsset({ modelId, ...props }) {
+function ModelAsset({ modelId, exploded = false, ...props }) {
     const config = getModelConfig(modelId);
     const modelUrl = getModelUrl(modelId);
 
@@ -100,6 +101,8 @@ function ModelAsset({ modelId, ...props }) {
         () => cloneSceneForModel(scene, config),
         [config, scene],
     );
+
+    useExplodedDisassembly(clonedScene, exploded);
 
     useEffect(() => () => {
         disposeModelMaterials(clonedScene);

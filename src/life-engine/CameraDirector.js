@@ -54,6 +54,7 @@ function createDirectorState(camera, controlsRef) {
         controlsLocked: true,
         transitionId: 0,
         currentTarget: initialTarget.clone(),
+        mouseOffset: new THREE.Vector3(0, 0, 0),
         transition: {
             active: false,
             elapsed: 0,
@@ -79,9 +80,15 @@ function createDirectorState(camera, controlsRef) {
  * @param {object} options.controlsRef React ref for OrbitControls.
  * @param {object} options.preset Optional preset to apply reactively.
  * @param {boolean} options.locked Whether OrbitControls should be locked.
+ * @param {boolean} options.active Whether this director should drive the
+ *   camera at all. Set to `false` while another system (e.g.
+ *   FreeRoamController) owns the camera directly — the director then reads
+ *   no state and writes nothing to `camera` or `controlsRef` each frame.
  * @returns {object} Camera director API.
  */
-export function useCameraDirector({ controlsRef, preset = null, locked = true } = {}) {
+export function useCameraDirector({
+    controlsRef, preset = null, locked = true, active = true,
+} = {}) {
     const camera = useThree((state) => state.camera);
     const directorRef = useRef(null);
 
@@ -141,10 +148,10 @@ export function useCameraDirector({ controlsRef, preset = null, locked = true } 
         applyControlsLock(false);
     }, [applyControlsLock]);
 
-    const update = useCallback((delta) => {
+    const update = useCallback((delta, pointer = null) => {
         const director = directorRef.current;
 
-        if (!director || director.disposed) {
+        if (!director || director.disposed || !active) {
             return;
         }
 
@@ -185,18 +192,39 @@ export function useCameraDirector({ controlsRef, preset = null, locked = true } 
             }
         }
 
-        camera.lookAt(director.currentTarget);
+        if (director.controlsLocked && pointer) {
+            const targetX = pointer.x * 0.3;
+            const targetY = pointer.y * 0.2;
+            director.mouseOffset.x = THREE.MathUtils.lerp(director.mouseOffset.x, targetX, delta * 3.0);
+            director.mouseOffset.y = THREE.MathUtils.lerp(director.mouseOffset.y, targetY, delta * 3.0);
+            camera.position.x += director.mouseOffset.x;
+            camera.position.y += director.mouseOffset.y;
+        }
+
+        if (director.controlsLocked) {
+            // Only the guided-tour script owns the look-at target. In explore
+            // (unlocked) mode, OrbitControls must own its own target from user
+            // input — overwriting it here every frame would fight the user's pan.
+            // (FreeRoamController's true walk-around mode never reaches this code
+            // at all — `active` is false and `update` returns before this point.)
+            camera.lookAt(director.currentTarget);
+        }
 
         if (controlsRef?.current) {
-            controlsRef.current.target.copy(director.currentTarget);
+            if (director.controlsLocked) {
+                controlsRef.current.target.copy(director.currentTarget);
+            }
             controlsRef.current.enabled = !director.controlsLocked;
             controlsRef.current.update();
         }
-    }, [camera, controlsRef]);
+    }, [active, camera, controlsRef]);
 
     useEffect(() => {
+        if (!active) {
+            return;
+        }
         applyControlsLock(locked);
-    }, [applyControlsLock, locked]);
+    }, [active, applyControlsLock, locked]);
 
     useEffect(() => {
         if (preset) {
@@ -210,9 +238,10 @@ export function useCameraDirector({ controlsRef, preset = null, locked = true } 
         }
     }, []);
 
-    useFrame((_, delta) => {
-        update(delta);
+    useFrame((state, delta) => {
+        update(delta, state.pointer);
     });
+
 
     return useMemo(() => ({
         applyPreset,

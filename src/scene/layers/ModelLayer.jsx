@@ -11,6 +11,7 @@ function ModelLayer({
     modelId,
     opacity = 1,
     wireframe = false,
+    exploded = false,
     scaleMultiplier = 1,
 }) {
     const groupRef = useRef(null);
@@ -45,7 +46,7 @@ function ModelLayer({
     return (
         <group ref={groupRef} position={[0, 0, 0]} scale={[scale, scale, scale]}>
             <Suspense fallback={null}>
-                <ModelAsset modelId={modelId} />
+                <ModelAsset modelId={modelId} exploded={exploded} />
             </Suspense>
         </group>
     );

@@ -30,7 +30,7 @@ function ScrollHint() {
         }}>
             <span style={{
                 fontSize: 10,
-                color: 'rgba(135, 206, 235, 0.45)',
+                color: 'rgba(255, 179, 122, 0.45)',
                 fontFamily: 'system-ui, sans-serif',
                 letterSpacing: '2px',
                 textTransform: 'uppercase',
@@ -39,7 +39,7 @@ function ScrollHint() {
             </span>
             <span style={{
                 fontSize: 16,
-                color: 'rgba(135, 206, 235, 0.4)',
+                color: 'rgba(255, 179, 122, 0.4)',
                 animation: 'scrollBounce 1.6s ease-in-out infinite',
                 display: 'block',
             }}>

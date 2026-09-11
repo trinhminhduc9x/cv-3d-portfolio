@@ -19,7 +19,7 @@ function LoadingScreen() {
         <div role="status" aria-live="polite" aria-label={`Loading 3D portfolio ${Math.round(progress)} percent`} style={{
             position: 'fixed',
             inset: 0,
-            background: '#0f1419',
+            background: '#14100d',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -31,7 +31,7 @@ function LoadingScreen() {
         }}>
             <div style={{
                 fontFamily: 'system-ui, sans-serif',
-                color: '#87ceeb',
+                color: '#ffb37a',
                 fontSize: 13,
                 letterSpacing: '3px',
                 textTransform: 'uppercase',
@@ -44,23 +44,23 @@ function LoadingScreen() {
             <div style={{
                 width: 200,
                 height: 2,
-                background: 'rgba(135, 206, 235, 0.15)',
+                background: 'rgba(255, 179, 122, 0.15)',
                 borderRadius: 2,
                 overflow: 'hidden',
             }}>
                 <div style={{
                     width: `${progress}%`,
                     height: '100%',
-                    background: 'linear-gradient(90deg, #4a90e2, #87ceeb)',
+                    background: 'linear-gradient(90deg, #e8973f, #ffb37a)',
                     transition: 'width 0.3s ease',
-                    boxShadow: '0 0 10px rgba(135, 206, 235, 0.7)',
+                    boxShadow: '0 0 10px rgba(255, 179, 122, 0.7)',
                 }} />
             </div>
 
             <div style={{
                 marginTop: 12,
                 fontSize: 11,
-                color: 'rgba(135, 206, 235, 0.45)',
+                color: 'rgba(255, 179, 122, 0.45)',
                 fontFamily: 'system-ui, sans-serif',
                 letterSpacing: '1px',
             }}>

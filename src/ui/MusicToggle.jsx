@@ -9,11 +9,75 @@ function MusicToggle() {
     const playing = status === 'playing';
     const busy = status === 'starting';
 
-    useEffect(() => () => {
-        if (scoreRef.current) {
-            scoreRef.current.dispose();
-            scoreRef.current = null;
-        }
+    useEffect(() => {
+        let removed = false;
+        let interactionListenersAdded = false;
+
+        const attemptPlay = async () => {
+            if (removed || scoreRef.current) {
+                return;
+            }
+
+            scoreRef.current = createBackgroundMusic(BACKGROUND_MUSIC);
+            if (!scoreRef.current) {
+                return;
+            }
+
+            setStatus('starting');
+            await scoreRef.current.start();
+
+            if (!removed) {
+                setStatus('playing');
+            }
+        };
+
+        const resetOnError = () => {
+            if (scoreRef.current) {
+                scoreRef.current.dispose();
+                scoreRef.current = null;
+            }
+            if (!removed) {
+                setStatus('idle');
+            }
+        };
+
+        const removeInteractionListeners = () => {
+            if (!interactionListenersAdded) {
+                return;
+            }
+
+            window.removeEventListener('mousedown', onFirstInteraction);
+            window.removeEventListener('keydown', onFirstInteraction);
+            window.removeEventListener('touchend', onFirstInteraction);
+            interactionListenersAdded = false;
+        };
+
+        const onFirstInteraction = () => {
+            removeInteractionListeners();
+            attemptPlay().catch(resetOnError);
+        };
+
+        attemptPlay().catch(() => {
+            resetOnError();
+
+            if (removed) {
+                return;
+            }
+
+            interactionListenersAdded = true;
+            window.addEventListener('mousedown', onFirstInteraction, { once: true });
+            window.addEventListener('keydown', onFirstInteraction, { once: true });
+            window.addEventListener('touchend', onFirstInteraction, { once: true });
+        });
+
+        return () => {
+            removed = true;
+            removeInteractionListeners();
+            if (scoreRef.current) {
+                scoreRef.current.dispose();
+                scoreRef.current = null;
+            }
+        };
     }, []);
 
     const handleToggle = async () => {

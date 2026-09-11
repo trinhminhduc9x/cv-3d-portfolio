@@ -26,7 +26,17 @@ describe('webglSupport', () => {
 
         initializeShaderChunks();
 
-        expect(THREE.ShaderChunk.colorspace_fragment).toBe(THREE.ShaderChunk.encodings_fragment);
-        expect(THREE.ShaderChunk.colorspace_pars_fragment).toBe(THREE.ShaderChunk.encodings_pars_fragment);
+        // encodings_fragment may be absent in newer three.js — guard both paths.
+        if (THREE.ShaderChunk.encodings_fragment) {
+            expect(THREE.ShaderChunk.colorspace_fragment).toBe(THREE.ShaderChunk.encodings_fragment);
+        } else {
+            expect(THREE.ShaderChunk.colorspace_fragment).toBe('gl_FragColor = linearToOutputTexel( gl_FragColor );');
+        }
+
+        if (THREE.ShaderChunk.encodings_pars_fragment) {
+            expect(THREE.ShaderChunk.colorspace_pars_fragment).toBe(THREE.ShaderChunk.encodings_pars_fragment);
+        } else {
+            expect(THREE.ShaderChunk.colorspace_pars_fragment).toBeUndefined();
+        }
     });
 });

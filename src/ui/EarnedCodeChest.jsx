@@ -313,7 +313,7 @@ function EarnedCodeChest({ chapter, transitioning }) {
                         <div
                             style={{
                                 fontSize: 10,
-                                color: 'rgba(135,206,235,0.6)',
+                                color: 'rgba(255,179,122,0.6)',
                                 letterSpacing: 0.5,
                                 marginBottom: 10,
                             }}

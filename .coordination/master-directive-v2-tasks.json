@@ -1,0 +1,60 @@
+{
+  "schema": "task-directive/v1",
+  "tasks": [
+    {
+      "key": "phase1-core",
+      "title": "Tạo các module life-engine và core bị thiếu",
+      "role": "developer",
+      "workflow": "build",
+      "priority": "Critical",
+      "capabilities": ["code", "test"],
+      "depends_on": [],
+      "extra_dirs": ["D:/Personal_Project/CV_3D"],
+      "brief": "Tạo các file sau trong D:/Personal_Project/CV_3D/src/:\n\n1. src/life-engine/ChapterManager.js — export useChapterManager(chapters) trả về { chapters, currentChapter, currentIndex, setChapter(id) }. Dùng useState + useCallback. currentChapter = chapters[currentIndex].\n\n2. src/life-engine/InteractionModeManager.js — export useInteractionModeManager(controlsRef) trả về { mode: 'guided'|'explore', guidedMode(), exploreMode() }. Mặc định 'guided'.\n\n3. src/life-engine/TransitionOrchestrator.js — export useTransitionOrchestrator(onChapterReached). Cần có:\n   - orchestrator.getChapterState(chapter) → trả về visualState object với các trường: mechanicalOpacity, architectureOpacity, softwareOpacity, warmLightIntensity, bloomIntensity, neonRimIntensity, gridOpacity, infiniteGridOpacity, nodeOpacity, lineProgress, fadeOverlay, active, architectureScale, mechanicalWireframe, softwareWireframe\n   - orchestrator.playTransition(fromChapter, toChapter) → trả về { duration } từ transitionProfile\n   - orchestrator.update(delta) — advance transition progress, gọi onChapterReached cuando transition complete\n   - setVisualState callback được lưu trong closure\n   - visualState dạng reactive (có thể dùng useState bên trong hook)\n\n4. src/core/narrativeController.js — export function isEditableTarget(target) trả về true nếu target là HTMLInputElement/HTMLTextAreaElement/HTMLSelectElement.\n\n5. src/core/webglSupport.js —\n   - export function isWebGLSupported() → !!window.WebGLRenderingContext && !!document.createElement('canvas').getContext('webgl') || !!document.createElement('canvas').getContext('experimental-webgl')\n   - export function initializeShaderChunks() → empty function (chưa có logic cụ thể, nhưng phải tồn tại)\n\n6. src/scene/layers/MechanicalLayer.jsx — R3F component nhận { active, opacity, wireframe, exploded }. Render một group gồm 1-2 mesh đơn giản (ví dụ: IcosahedronGeometry hoặc BoxGeometry) với material opaque/dashed tùy props. Khi inactive hoặc opacity ≈ 0 thì không render mesh.\n\n7. src/scene/layers/ArchitectureLayer.jsx — tương tự, render建筑物形状 (ví dụ: ExtrudeGeometry từ một shape đơn giản).\n\n8. src/scene/layers/SoftwareLayer.jsx — render grid/matrix cảm giác software, có thể dùng nhiều đường lineSegments hoặc particle grid nhỏ.\n\n9. src/scene/models/useStrategicModelPreload.js — export function useStrategicModelPreload({ chapters, currentIndex, preloadRemaining }). Ghi console.log hoặc TODO 주석: 'Model preloading placeholder — will use modelRegistry + GLTFLoader'.\n\n10. src/scene/models/modelRegistry.js — export const MODEL_REGISTRY = {}; export function getModelUrl(id) { return ''; } và các function placeholder khác (getModelConfig, preloadModel, preloadModels, getAllModelIds, getChapterModelId).\n\nYÊU CẦU: Mã phải tuân thủ GEMINI.md: không import trực tiếp GLTFLoader ngoài ModelAsset, không tạo model loader standalone. Khi nào có model thật thì mới dùng ModelAsset.\n\nSau khi tạo xong, chạy `cd D:/Personal_Project/CV_3D && npx vite build 2>&1 | head -50` để xác nhận compile clean. Report lỗi nào còn sót lại."
+    },
+    {
+      "key": "phase1-layer-default-models",
+      "title": "Thêm model mặc định cho 3 layers còn thiếu model thật",
+      "role": "developer",
+      "workflow": "build",
+      "priority": "High",
+      "capabilities": ["code", "test"],
+      "depends_on": ["phase1-core"],
+      "extra_dirs": ["D:/Personal_Project/CV_3D"],
+      "brief": "Trong D:/Personal_Project/CV_3D/src/scene/models/, tạo model registry entry mặc định (placeholder) cho từng layer:\n\n- MechanicalLayer → model id 'mechanical-hull' → geometry dựng sẵn từ BufferGeometry (không cần GLB file thật, dùng Three.js primitives: SphereGeometry + CylinderGeometry merge)\n- ArchitectureLayer → model id 'architecture-hall' → dùng ExtrudeGeometry từ Shape\n- SoftwareLayer → model id 'software-core' → dùng IcosahedronGeometry hoặc grid accessory\n\nSau đó integrate vào ModelAsset.jsx để render các model này khi không có GLB thực.\n\nCuối cùng chạy `npm run check` (lint + unit test + build) — report kết quả."
+    },
+    {
+      "key": "phase2-upgrade-deps",
+      "title": "Nâng cấp dependencies: Three.js, R3F, Drei, Postprocessing, Vite",
+      "role": "developer",
+      "workflow": "build",
+      "priority": "High",
+      "capabilities": ["code", "test"],
+      "depends_on": ["phase1-core"],
+      "extra_dirs": ["D:/Personal_Project/CV_3D"],
+      "brief": "Trong D:/Personal_Project/CV_3D/package.json, update các dependencies sau:\n\n- three: ^0.152.2 → ^0.160.0\n- @react-three/fiber: ^8.13.7 → ^9.0.0\n- @react-three/drei: ^9.88.6 → ^10.0.0\n- @react-three/postprocessing: ^2.19.1 → ^3.0.0\n- vite: ^4.4.5 → ^5.0.0\n\nCác package khác giữ nguyên. Sau khi sửa package.json, chạy:\n  cd D:/Personal_Project/CV_3D && npm install\n\nSau đó chạy `npm run check` và report error/lỗi nào cần xử lý thêm.\n\nLƯU Ý: Kiểm tra break changes giữa R3F v8→v9 và Drei v9→v10 — có thể cần sửa SceneRoot.jsx nếu API thay đổi (ví dụ: drei components rename, postprocessing API change). Report từng breaking change tìm được."
+    },
+    {
+      "key": "phase3-audio-update",
+      "title": "Cập nhật audio engine: WebAudio API và audio reactivity",
+      "role": "developer",
+      "workflow": "build",
+      "priority": "Medium",
+      "capabilities": ["code", "test"],
+      "depends_on": ["phase1-core"],
+      "extra_dirs": ["D:/Personal_Project/CV_3D"],
+      "brief": "Trong D:/Personal_Project/CV_3D/src/audio/, review và cập nhật:\n\n1. audioReactiveEngine.js — đảm bảo dùng Web Audio API (AudioContext, AnalyserNode, FFT) để extract frequency data. Nếu chưa có, implement cơ bản: tạo AudioContext, connect media element → AnalyserNode → getByteFrequencyData.\n\n2. backgroundMusic.js — đảm bảo fungsi play/pause và volume control. Nếu dùng HTMLAudioElement, giữ nguyên; nếu muốn nâng cấp lên AudioBuffer + decodeAudioData, báo sếp.\n\n3. uiSoundSynth.js — đảm nhiên hàm playTransitionSound() hoạt động (tạo oscillator vài notes ngắn).\n\n4. ambientScore.js — nếu có, đảm bảo loop và crossfade.\n\nSau khi sửa, test trong browser: chạy `cd D:/Personal_Project/CV_3D && npx vite --host 0.0.0.0 --port 5173` background, sau đó dùng puppeteer mở http://localhost:5173 và verify không có console error liên quan đến audio.\n\nReport kết quả."
+    },
+    {
+      "key": "phase4-verify-deploy",
+      "title": "Chạy kiểm tra toàn diện vàdeploy",
+      "role": "qa",
+      "workflow": "verify",
+      "priority": "Critical",
+      "capabilities": ["test", "verify"],
+      "depends_on": ["phase1-core", "phase1-layer-default-models", "phase2-upgrade-deps", "phase3-audio-update"],
+      "extra_dirs": ["D:/Personal_Project/CV_3D"],
+      "brief": "Sau khi tất cả phase tronbaên trên hoàn tất:\n\n1. Chạy `cd D:/Personal_Project/CV_3D && npm run check` — phải pass clean (lint + unit test + build).\n2. Chạy `cd D:/Personal_Project/CV_3D && npm run test:visual` — nếu thiếu browser, chạy trước `npm run test:visual:install-browser`. Report visual test result.\n3. Build production: `cd D:/Personal_Project/CV_3D && npm run build` → verify dist/ có index.html và assets.\n4. Deploy: `cd D:/Personal_Project/CV_3D && npm run deploy` → report gh-pages publish result.\n5. Mở https://trinhminhduc9x.github.io/cv-3d-portfolio/ bằng browser_exec vàapture screenshot, verify không có console error.\n\nReport tổng hợp: lỗi nào còn sót lại, gì đã ổn định."
+    }
+  ]
+}

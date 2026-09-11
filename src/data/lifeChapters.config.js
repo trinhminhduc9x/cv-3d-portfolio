@@ -110,8 +110,11 @@ export const LIFE_CHAPTERS = [
         label: 'Awakening',
         scene: 'architecture',
         cameraPreset: {
-            position: [5, 6.5, 12],
-            target: [5, 0, 0],
+            // Hub & spokes layout: architecture zone world position is
+            // [-9, 0, -15.588] — same camera-to-target offset as before,
+            // re-targeted to the zone's new position.
+            position: [-9, 6.5, -3.588],
+            target: [-9, 0, -15.588],
             fov: 48,
         },
         lightingMood: {
@@ -163,8 +166,10 @@ export const LIFE_CHAPTERS = [
         label: 'Transformation',
         scene: 'software',
         cameraPreset: {
-            position: [7.2, 2.1, 4.2],
-            target: [10, 0, 0],
+            // Software zone world position is [9, 0, -15.588] in the hub &
+            // spokes layout — same camera-to-target offset as before.
+            position: [6.2, 2.1, -11.388],
+            target: [9, 0, -15.588],
             fov: 50,
         },
         lightingMood: {
@@ -227,8 +232,8 @@ export const LIFE_CHAPTERS = [
         label: 'Mastery',
         scene: 'software',
         cameraPreset: {
-            position: [8.4, 3.1, 6.4],
-            target: [10, 0.2, 0],
+            position: [7.4, 3.1, -9.188],
+            target: [9, 0.2, -15.588],
             fov: 46,
         },
         lightingMood: {
@@ -275,8 +280,8 @@ export const LIFE_CHAPTERS = [
         label: 'Vision',
         scene: 'software',
         cameraPreset: {
-            position: [10, 5.8, 15],
-            target: [10, 0, 0],
+            position: [9, 5.8, -0.588],
+            target: [9, 0, -15.588],
             fov: 38,
         },
         lightingMood: {

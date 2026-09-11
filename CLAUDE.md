@@ -65,8 +65,36 @@ There is no parallel `SceneCore` architecture. Keep future scene work on this pa
 
 Chapters are configured in `src/data/lifeChapters.config.js`. `SceneRoot` maps chapter labels into `TimelineIndicator`, and visual tests rely on the generated `aria-label="Show {Chapter} chapter"` contract.
 
+## Performance Rules
+
+- **Dispose on unmount**: every cloned material, geometry, and texture created by an R3F component must be disposed in that component's `useEffect` cleanup (see `ModelAsset.jsx` for the reference pattern).
+- **Lazy layer unloading**: use `LazyLayerMount` with `lazyUnloadDelay` from `usePerformanceProfile` so inactive chapter layers release GPU memory instead of lingering.
+- **Draw call reduction**: prefer instancing (`InstancedMesh`) or merged static geometry over many individual meshes.
+- **Shadow & DPR budgets**: honor `shadowMapSize` and `maxDevicePixelRatio` from `usePerformanceProfile` — any new heavy visual effect (postprocessing pass, particle system, reflector material, audio-reactive analysis) must gate on `performanceProfile.lowEnd` and degrade gracefully.
+- **Preload policy**: extend `useStrategicModelPreload.js` rather than adding parallel loading logic — high-end devices idle-preload remaining models, low-end/mobile devices defer non-adjacent ones.
+
 ## Deployment
 
 - Base path: `/cv-3d-portfolio/` in `vite.config.js`.
 - Target: `https://trinhminhduc9x.github.io/cv-3d-portfolio`.
 - GitHub Actions run lint, unit tests, build, install Puppeteer Chrome, and visual tests.
+
+## Skill-First Workflow
+
+This project has a curated set of Claude Code skills and agents under `.claude/skills/` and `.claude/agents/`, adapted from a game-studio skill framework for this React/R3F/Three.js portfolio. Before making a non-trivial code change, run the skill that fits — a `PreToolUse` hook (`.claude/hooks/require-skill.sh`) will print a soft reminder (not a hard block) if no skill has run yet this session.
+
+| Situation | Skill |
+|---|---|
+| Small change (tuning, tweak, small addition, under ~4h) | `/quick-design` |
+| Structural/architectural change, new dependency, new pattern | `/architecture-decision` |
+| Reviewing a diff before calling it done | `/code-review` |
+| New/changed UI overlay or navigation flow | `/ux-design` then `/ux-review` |
+| GLB/asset work, memory leak check, visual regression baseline update | `/web3d-optimization` |
+| Frame-time/memory/load-time concerns | `/perf-profile` |
+| Before a public deploy after a dependency or input-handling change | `/security-audit` |
+| Something broke | `/bug-report` |
+| Recurring/accumulating debt (TODOs, oversized files) | `/tech-debt` |
+| Feature grew bigger than planned | `/scope-check` |
+| Documenting an existing undocumented feature | `/reverse-document` |
+
+See `.claude/docs/technical-preferences.md` for the pinned stack, performance budgets, and naming conventions these skills read from. Also see `GEMINI.md`, which documents the same architecture for Gemini and stays in sync with this file.

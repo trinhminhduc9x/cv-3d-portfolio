@@ -33,6 +33,7 @@ function TimelineIndicator({ index, onNavigate, items = DEFAULT_ITEMS }) {
 
     return (
         <nav
+            className="timeline-indicator"
             aria-label="Career timeline"
             role="tablist"
             style={{
@@ -78,21 +79,22 @@ function TimelineIndicator({ index, onNavigate, items = DEFAULT_ITEMS }) {
                             borderRadius: 4,
                             display: 'block',
                             background: i === index
-                                ? '#87ceeb'
+                                ? '#ffb37a'
                                 : hovered === i
-                                    ? 'rgba(135, 206, 235, 0.45)'
-                                    : 'rgba(135, 206, 235, 0.2)',
+                                    ? 'rgba(255, 179, 122, 0.45)'
+                                    : 'rgba(255, 179, 122, 0.2)',
                             transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                            boxShadow: i === index ? '0 0 12px rgba(135, 206, 235, 0.55)' : 'none',
+                            boxShadow: i === index ? '0 0 12px rgba(255, 179, 122, 0.55)' : 'none',
                         }}
                     />
                     <span
+                        className="timeline-indicator-label"
                         style={{
                             fontSize: 10,
                             color: i === index
-                                ? 'rgba(135, 206, 235, 0.9)'
+                                ? 'rgba(255, 179, 122, 0.9)'
                                 : hovered === i
-                                    ? 'rgba(135, 206, 235, 0.6)'
+                                    ? 'rgba(255, 179, 122, 0.6)'
                                     : 'rgba(255, 255, 255, 0.22)',
                             fontFamily: 'system-ui, sans-serif',
                             transition: 'color 0.3s ease',

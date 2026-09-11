@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
  * @param {boolean} props.transitioning Whether a transition is active.
  * @returns {JSX.Element | null} Text reveal overlay.
  */
-function TextRevealSystem({ chapter, transitioning }) {
+function TextRevealSystem({ chapter, transitioning, lang = 'vi' }) {
     const [visible, setVisible] = useState(false);
     const lines = chapter?.textSequence || [];
 
@@ -59,8 +59,8 @@ function TextRevealSystem({ chapter, transitioning }) {
             {/* Text blocks — each item is { vi, en } or a plain string */}
             {lines.map((item, i) => {
                 const isBilingual = item !== null && typeof item === 'object';
-                const vi = isBilingual ? item.vi : item;
-                const en = isBilingual ? item.en : null;
+                const primaryText = isBilingual ? (lang === 'en' ? item.en || item.vi : item.vi) : item;
+                const secondaryText = isBilingual ? (lang === 'en' ? item.vi : item.en) : null;
                 const isShowing = visible && !transitioning;
                 const delay = 480 + i * 140;
 
@@ -74,7 +74,7 @@ function TextRevealSystem({ chapter, transitioning }) {
                             transition: `opacity ${delay}ms ease, transform ${delay}ms ease`,
                         }}
                     >
-                        {/* Vietnamese — primary */}
+                        {/* Primary text */}
                         <p
                             style={{
                                 margin: 0,
@@ -84,11 +84,11 @@ function TextRevealSystem({ chapter, transitioning }) {
                                 textShadow: '0 10px 30px rgba(0, 0, 0, 0.65)',
                             }}
                         >
-                            {vi}
+                            {primaryText}
                         </p>
 
-                        {/* English — secondary, shown only for bilingual items */}
-                        {en && (
+                        {/* Secondary text */}
+                        {secondaryText && (
                             <p
                                 style={{
                                     margin: '4px 0 0',
@@ -100,7 +100,7 @@ function TextRevealSystem({ chapter, transitioning }) {
                                     letterSpacing: 0.2,
                                 }}
                             >
-                                {en}
+                                {secondaryText}
                             </p>
                         )}
                     </div>
@@ -111,3 +111,4 @@ function TextRevealSystem({ chapter, transitioning }) {
 }
 
 export default TextRevealSystem;
+

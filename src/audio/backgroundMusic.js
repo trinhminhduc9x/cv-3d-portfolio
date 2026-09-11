@@ -1,7 +1,21 @@
 import { createAmbientScore } from './ambientScore';
+import { connectAudioReactiveSource } from './audioReactiveEngine';
 
 const DEFAULT_VOLUME = 0.38;
 const DEFAULT_FADE_SECONDS = 1.2;
+
+let sharedAudioContext = null;
+
+function getSharedAudioContext() {
+    if (typeof window === 'undefined') return null;
+    if (!sharedAudioContext) {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (AudioCtx) {
+            sharedAudioContext = new AudioCtx();
+        }
+    }
+    return sharedAudioContext;
+}
 
 function createFileMusic({ src, volume = DEFAULT_VOLUME, fadeSeconds = DEFAULT_FADE_SECONDS }) {
     if (typeof window === 'undefined' || !src) {
@@ -10,10 +24,12 @@ function createFileMusic({ src, volume = DEFAULT_VOLUME, fadeSeconds = DEFAULT_F
 
     const audio = new Audio(src);
     let fadeFrame = null;
+    let connected = false;
 
     audio.loop = true;
     audio.preload = 'auto';
     audio.volume = 0;
+    audio.crossOrigin = 'anonymous';
 
     const cancelFade = () => {
         if (fadeFrame) {
@@ -47,6 +63,22 @@ function createFileMusic({ src, volume = DEFAULT_VOLUME, fadeSeconds = DEFAULT_F
 
     return {
         async start() {
+            const ctx = getSharedAudioContext();
+            if (ctx && ctx.state === 'suspended') {
+                await ctx.resume().catch(() => {});
+            }
+
+            if (ctx && !connected) {
+                try {
+                    const sourceNode = ctx.createMediaElementSource(audio);
+                    sourceNode.connect(ctx.destination);
+                    connectAudioReactiveSource(sourceNode, ctx);
+                    connected = true;
+                } catch {
+                    // Fallback to standard audio element if already connected
+                }
+            }
+
             await audio.play();
             fadeTo(volume);
         },

@@ -3,6 +3,7 @@ import { useCallback, useMemo, useState } from 'react';
 export const INTERACTION_MODES = {
     guided: 'guided',
     explore: 'explore',
+    freeroam: 'freeroam',
 };
 
 function setControlsEnabled(controlsRef, enabled) {
@@ -55,6 +56,18 @@ export function createInteractionModeManager(
             return currentMode;
         },
         /**
+         * Enables free-roam mode. OrbitControls and CameraDirector both stay
+         * disabled — FreeRoamController owns the camera directly via
+         * pointer-lock + WASD.
+         *
+         * @returns {string} Current mode.
+         */
+        freeroamMode() {
+            currentMode = INTERACTION_MODES.freeroam;
+            applyMode();
+            return currentMode;
+        },
+        /**
          * Enables OrbitControls without changing mode.
          */
         enableControls() {
@@ -94,6 +107,10 @@ export function useInteractionModeManager(
         setCurrentMode(manager.exploreMode());
     }, [manager]);
 
+    const freeroamMode = useCallback(() => {
+        setCurrentMode(manager.freeroamMode());
+    }, [manager]);
+
     const enableControls = useCallback(() => {
         manager.enableControls();
     }, [manager]);
@@ -107,6 +124,7 @@ export function useInteractionModeManager(
         mode: currentMode,
         guidedMode,
         exploreMode,
+        freeroamMode,
         enableControls,
         disableControls,
     };

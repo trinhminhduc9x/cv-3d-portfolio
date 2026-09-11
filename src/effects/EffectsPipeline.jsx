@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useMemo, useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
-import { Bloom, EffectComposer, Vignette } from '@react-three/postprocessing';
+import { Bloom, ChromaticAberration, EffectComposer, Vignette } from '@react-three/postprocessing';
 import * as THREE from 'three';
 
 const MOOD_PRESETS = {
@@ -97,7 +97,6 @@ function EffectsPipeline({ mood = 'origin', visualState = null }) {
     }, [resolvedMood.background, resolvedMood.toneMappingExposure, gl, scene]);
 
     // Fog object — recreated only when COLOR changes, never on density changes.
-    // Density is driven exclusively by useFrame to avoid jumps when chapters switch.
     useEffect(() => {
         const initialDensity = visualStateRef.current?.fogDensity ?? resolvedMood.fogDensity;
         const fog = new THREE.FogExp2(resolvedMood.fogColor, initialDensity);
@@ -109,7 +108,7 @@ function EffectsPipeline({ mood = 'origin', visualState = null }) {
                 scene.fog = null;
             }
         };
-    }, [resolvedMood.fogColor, scene]); // intentionally excludes fogDensity — useFrame owns density
+    }, [resolvedMood.fogColor, scene]);
 
     // Per-frame fog density: smooth animated transitions, no chapter-change jumps
     useFrame(() => {
@@ -127,8 +126,12 @@ function EffectsPipeline({ mood = 'origin', visualState = null }) {
         }
     });
 
-    // Bloom intensity driven by live visual state during transitions
     const bloomIntensity = visualState?.bloomIntensity ?? resolvedMood.bloomIntensity;
+    const isTransitioning = Boolean(visualState?.active);
+    const chromaticOffset = useMemo(
+        () => (isTransitioning ? new THREE.Vector2(0.002, 0.002) : new THREE.Vector2(0.0004, 0.0004)),
+        [isTransitioning],
+    );
 
     return (
         <EffectComposer multisampling={0} disableNormalPass>
@@ -138,6 +141,7 @@ function EffectsPipeline({ mood = 'origin', visualState = null }) {
                 luminanceSmoothing={0.22}
                 mipmapBlur
             />
+            <ChromaticAberration offset={chromaticOffset} />
             <Vignette offset={0.22} darkness={resolvedMood.vignetteDarkness} />
         </EffectComposer>
     );

@@ -103,8 +103,8 @@ button:focus-visible {
   min-height: 38px;
   padding: 9px 12px;
   border-radius: 6px;
-  border: 1px solid rgba(135, 206, 235, 0.26);
-  background: rgba(15, 20, 25, 0.84);
+  border: 1px solid rgba(255, 179, 122, 0.26);
+  background: rgba(20, 15, 12, 0.84);
   color: rgba(255, 255, 255, 0.82);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
   backdrop-filter: blur(10px);
@@ -115,7 +115,7 @@ button:focus-visible {
 }
 
 .music-toggle:hover {
-  border-color: rgba(135, 206, 235, 0.58);
+  border-color: rgba(255, 179, 122, 0.58);
   color: #ffffff;
 }
 
@@ -125,8 +125,8 @@ button:focus-visible {
 }
 
 .music-toggle--active {
-  border-color: rgba(135, 206, 235, 0.72);
-  background: rgba(26, 82, 110, 0.84);
+  border-color: rgba(255, 179, 122, 0.72);
+  background: rgba(92, 54, 20, 0.84);
   color: #ffffff;
 }
 
@@ -183,5 +183,81 @@ button:focus-visible {
     min-height: 36px;
     padding: 8px 10px;
     font-size: 11px;
+  }
+
+  /* Fixed overlay panels use inline styles for desktop layout (position,
+     size, spacing are computed alongside dynamic/state-driven values) —
+     these mobile overrides need !important to win over that inline style,
+     since a plain class rule cannot outrank it. */
+
+  .developer-hud {
+    top: 10px !important;
+    left: 10px !important;
+    max-width: 200px !important;
+    font-size: 9px !important;
+  }
+
+  /* Explode/Inspect/Command are power-user dev toys, not core CV content —
+     hide them on mobile so the HUD collapses to a short one-line chip and
+     leaves room for the profile card below it. */
+  .developer-hud-controls {
+    display: none !important;
+  }
+
+  .header-statement-panel {
+    top: 58px !important;
+    right: 10px !important;
+    max-width: 220px !important;
+    padding: 12px 14px !important;
+    font-size: 11px !important;
+  }
+
+  /* Children set their own explicit inline font-size, which wins over the
+     panel's font-size above — override each one directly. */
+  .header-statement-panel h1 {
+    font-size: 16px !important;
+  }
+
+  .header-statement-panel address {
+    font-size: 10px !important;
+    line-height: 1.5 !important;
+    padding-top: 8px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .header-statement-panel button {
+    font-size: 11px !important;
+    padding: 7px 10px !important;
+  }
+
+  .header-statement-collapse-btn {
+    display: inline-flex !important;
+    padding: 0 !important;
+    font-size: 16px !important;
+  }
+
+  .header-statement-chip {
+    top: 58px !important;
+    right: 10px !important;
+  }
+
+  .timeline-indicator {
+    bottom: 18px !important;
+    gap: 10px !important;
+  }
+
+  .timeline-indicator-label {
+    display: none !important;
+  }
+
+  .life-mode-controls {
+    right: 14px !important;
+    bottom: 18px !important;
+    gap: 6px !important;
+  }
+
+  .life-mode-controls button {
+    padding: 7px 9px !important;
+    font-size: 12px !important;
   }
 }
